@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 5000;
 
+const mongoose = require('mongoose');
+
 const checkCatIdMiddleware = require('./middlewares/middleware');
 const loggerMiddleware = require('./middlewares/loggerMiddleware');
 const cats = require('./cats');
