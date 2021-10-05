@@ -46,7 +46,8 @@ Person.find({})
 async function run() {
     // let count = await Person.countDocuments({ age: { $gte: 30 } });
     let names = await Person.find({}).select('name age');
-    let names = await Person.find({}, { _id: 0, name: 1 });
+    // let names = await Person.find({}, { _id: 0, name: 1 }); 
+
     console.log(names);
 };
 

@@ -1,12 +1,16 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
+require('./config/db');
 const app = express();
 const port = 5000;
+
+const Cat = require('./models/Cat');
 
 const checkCatIdMiddleware = require('./middlewares/middleware');
 const loggerMiddleware = require('./middlewares/loggerMiddleware');
 const cats = require('./cats');
+const createCat = require('./services/createCat');
 
 app.use('/static', express.static('public'));
 app.use(loggerMiddleware);
@@ -16,6 +20,18 @@ app.engine('hbs', handlebars({
 })); // engine -> handlebars
 app.set('view engine', 'hbs'); // izpolzvai view-engine-> handlebars
 
+app.get('/', (req, res) => {
+    createCat('Navcho', 'Ivaylo');
+    Cat.find({ name: "Navcho" })
+        .populate('owner')
+        .then((cat) => {
+            console.log(cat);
+            let name = "Navcho";
+            res.render('home', { name });
+        });
+
+
+})
 
 app.get('/cats', (req, res) => {
     res.render('cats', { cats: cats.getAll() });
@@ -46,6 +62,7 @@ app.post('/cats', (req, res) => {
 app.put('/cats/:id', (req, res) => {
     console.log('update cat');
 });
+
 
 
 app.listen(port, () => console.log(`this server is running on port ${port}`));
