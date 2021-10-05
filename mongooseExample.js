@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Person = require('./models/Person');
 
 const uri = 'mongodb://localhost:27017/mongotest'; // v koq baza danni e poslednoto query
 
@@ -7,22 +8,23 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => console.log('connected to database'));
 
-const personSchema = new mongoose.Schema({
-    name: String,
-    age: Number
-});
+let person = new Person({ name: "Dilyan", age: 27 }); // nova instanciq na nashiq model
 
-const Person = mongoose.model('Person', personSchema);
+//save to my databse
 
-let person = new Person({ name: "Grigor", age: 36 }); // nova instanciq na nashiq model
-// person.save((err, result) => {
-//     if (err) return console.log(err);
+// person.save();
+//     .then(result => {
+//         console.log(result);
+//     }); 
 
-//     console.log(result);
+//take from my database (extract);
+Person.find({})
+    .then((people) => {
+        people.forEach(person => console.log(`I am born ${person.birthYear}`));
+    })
+    .catch(err => console.log(err));
 
-// }); //zapametqva go v bazata danni
-
-person.save()
-    .then(result => {
-        console.log(result);
+Person.findById('615c3631a61e0f6c74a75cfa')
+    .then(res => {
+        console.log(res);
     });
