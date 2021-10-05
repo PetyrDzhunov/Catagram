@@ -24,7 +24,30 @@ Person.find({})
     })
     .catch(err => console.log(err));
 
-Person.findById('615c3631a61e0f6c74a75cfa')
-    .then(res => {
-        console.log(res);
-    });
+// Person.findById('615c3631a61e0f6c74a75cfa')
+//     .then(res => {
+//         console.log(res);
+//     });
+
+// Person.find({ _id: '615c3631a61e0f6c74a75cfa' })
+//     .then(res => {
+//         console.log(res);
+//     })
+
+// Person.updateOne({ _id: '615c3631a61e0f6c74a75cfa' }, { $set: { name: "Dilqn4o", age: 54 } })
+//     .then(res => {
+//         console.log(res);
+//     });
+
+// Person.remove({ name: "Dilqn4o" })
+//     .then(res => console.log(res));
+;
+
+async function run() {
+    // let count = await Person.countDocuments({ age: { $gte: 30 } });
+    let names = await Person.find({}).select('name age');
+    let names = await Person.find({}, { _id: 0, name: 1 });
+    console.log(names);
+};
+
+run();

@@ -4,7 +4,7 @@ const personSchema = new mongoose.Schema({
     name: String,
     age: Number
 }, {
-    getters: true,
+    virtuals: true,
 });
 
 personSchema.methods.getInfo = function() {
